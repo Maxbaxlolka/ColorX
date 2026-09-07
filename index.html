@@ -102,41 +102,58 @@ filter:blur(30px);animation:fsPickAurora 7s ease-in-out infinite alternate}
 
 
 
-/* MOBILE FREE SPINS PICK GRID FIX */
-@media(max-width:600px){
-  .fsPickBonus{padding:8px;align-items:center}
-  .fsPickPanel{width:100%;max-width:430px}
-  .fsPickTop{margin-bottom:8px}
-  .fsPickKicker{font-size:9px;letter-spacing:2px}
-  .fsPickTitle{font-size:24px;line-height:1.05;margin:3px 0 6px}
-  .fsPickInfo{gap:6px}
-  .fsPickPill{padding:5px 8px;font-size:10px}
-  .fsPickGrid{
-    grid-template-columns:repeat(6,1fr);
-    gap:4px;
-    width:100%;
+
+/* MOBILE FREE SPINS LITE MODE — keeps the bonus visually clear without expensive effects */
+@media (max-width:720px){
+  .fsPickBonus{
+    background:rgba(2,3,7,.98);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+    padding:10px;
   }
-  .fsPickCell{aspect-ratio:1}
-  .fsPickCard,.fsPickFace{border-radius:8px}
-  .fsPickBack:before{font-size:24px}
-  .fsPickFront img{width:68%;height:68%}
-  .fsPickAmount{
-    right:2px;
-    bottom:2px;
-    font-size:8px;
-    padding:1px 3px;
+  .fsPickBonus:before{display:none!important;animation:none!important;filter:none!important}
+  .fsPickTitle{animation:none!important;filter:none!important;text-shadow:none!important}
+  .fsPickGrid{perspective:none!important;gap:7px}
+  .fsPickCell{perspective:none!important}
+  .fsPickCard{
+    transform-style:flat!important;
+    transition:opacity .14s ease,transform .14s ease!important;
+    border-radius:12px;
   }
-  .fsPickHint{margin-top:7px;font-size:9px;line-height:1.2}
-}
-@media(max-width:380px){
-  .fsPickBonus{padding:5px}
-  .fsPickPanel{max-width:360px}
-  .fsPickGrid{gap:3px}
-  .fsPickTitle{font-size:21px}
-  .fsPickPill{font-size:9px;padding:4px 6px}
-  .fsPickCard,.fsPickFace{border-radius:6px}
-  .fsPickBack:before{font-size:21px}
-  .fsPickAmount{font-size:7px}
+  .fsPickCell.revealed .fsPickCard{transform:none!important}
+  .fsPickFace{backface-visibility:visible!important;border-radius:12px}
+  .fsPickBack{box-shadow:none!important;animation:none!important;background:linear-gradient(145deg,#151c2b,#070a11)!important}
+  .fsPickBack:after{display:none!important;animation:none!important}
+  .fsPickCell:not(.revealed) .fsPickBack{animation:none!important;transform:none!important}
+  .fsPickFront{transform:none!important;opacity:0;pointer-events:none;box-shadow:none!important;background:#0a0f18!important}
+  .fsPickCell.revealed .fsPickBack{opacity:0;pointer-events:none}
+  .fsPickCell.revealed .fsPickFront{opacity:1}
+  .fsPickFront img{filter:none!important;width:72%;height:72%}
+  .fsPickCell.revealed{animation:none!important}
+
+  .fsIgnition{
+    background:rgba(2,3,7,.98)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  .fsRotorGlow,.fsRotorTrail{display:none!important;animation:none!important;filter:none!important}
+  .fsRotorSymbol{filter:none!important;will-change:transform;animation-duration:1.1s!important}
+  .fsIgnition.speed2 .fsRotorSymbol{animation-duration:.72s!important;filter:none!important}
+  .fsIgnition.speed3 .fsRotorSymbol{animation-duration:.48s!important;filter:none!important}
+  .fsIgnition.speed4 .fsRotorSymbol{animation-duration:.32s!important;filter:none!important}
+  .fsIgnition.speed4 .fsRotorWrap{animation:none!important}
+  .fsIgnitionTitle{text-shadow:none!important}
+  .fsIgnition.speed4 .fsIgnitionSpeed{text-shadow:none!important}
+
+  .fsTotalWin{
+    background:rgba(2,3,7,.98)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  .fsTotalWinBurst{display:none!important;animation:none!important}
+  .fsTotalWinTitle{filter:none!important}
+  .fsTotalWinAmount{text-shadow:0 0 10px rgba(255,255,255,.25)!important}
+  .fsTotalWinAmount.finish{animation:none!important}
 }
 
 </style>
@@ -232,6 +249,8 @@ const payouts={'jack.gif':[5,15,30,60],'queen.gif':[5,15,30,60],'king.gif':[8,20
 const normalSounds={'ace.gif':'sounds/tuzovvrukave.mp3','bubnauses.gif':'sounds/bubey.mp3','chirwa.gif':'sounds/chirvaaa.mp3','jack.gif':'sounds/valatovmnevadnomesto.mp3','king.gif':'sounds/karalyuokpdepodast.mp3','kresta.gif':'sounds/krestamyzluh.mp3','queen.gif':'sounds/daminarukah.mp3','spade.gif':'sounds/pikaa.mp3','ten.gif':'sounds/desyatkaznakizdesyaty.mp3'};
 const overlays=['symbols/Zarisovka1version.gif','symbols/zarisovka2version.gif'];
 const fsSymbols=[1,2,5,10,15,20,25,50,75,100,150,200].map(v=>({img:`symbols/${v}.gif`,val:v}));
+const MOBILE_FS_LITE=window.matchMedia('(max-width: 720px)').matches;
+const fsPrizeImage=v=>MOBILE_FS_LITE?`symbols/mobile/${v}.png`:`symbols/${v}.gif`;
 const fsSounds=['sounds/edynytsanebulytsa.mp3','sounds/dvoechkadurachka.mp3','sounds/pyatrazpoodnomu.mp3','sounds/desyatochkipregodyatsa.mp3','sounds/pyutnashkuvkarmashke.mp3','sounds/dvatsashkekbalashku.mp3','sounds/uhtudvadtsatpyat.mp3','sounds/klasspedesyuat.mp3','sounds/semdesyuatpyat.mp3','sounds/storazpoodnomu.mp3','sounds/stopedtesyatochki.mp3','sounds/dvuhsotenhvatyt.mp3'];
 const getBalance=()=>demo?demoBalance:realBalance;function setBalance(v){if(demo)demoBalance=v;else realBalance=v;localStorage.setItem(demo?'demoBalance':'realBalance',String(v))}
 function playSound(src){if(!src||soundVolume<=0)return;const a=new Audio(src);a.volume=soundVolume;a.play().catch(()=>{})}
@@ -257,7 +276,7 @@ function startFreeSpinPickBonus(picks,done){
     btn.className='fsPickCell';
     btn.type='button';
     btn.setAttribute('aria-label',`Hidden bonus cell ${i+1}`);
-    btn.innerHTML=`<span class="fsPickCard"><span class="fsPickFace fsPickBack"></span><span class="fsPickFace fsPickFront"><img src="${prize.img}" alt="${prize.val}"><span class="fsPickAmount">+${prize.val}</span></span></span>`;
+    btn.innerHTML=`<span class="fsPickCard"><span class="fsPickFace fsPickBack"></span><span class="fsPickFace fsPickFront"><img src="${fsPrizeImage(prize.val)}" alt="${prize.val}"><span class="fsPickAmount">+${prize.val}</span></span></span>`;
 
     btn.onclick=()=>{
       if(!bonusPickActive||btn.classList.contains('revealed')||bonusPicksRemaining<=0)return;
@@ -336,6 +355,8 @@ function showFreeSpinTotalWin(baseTotal,multipliers,done){
 
 function showFreeSpinIgnition(count,done){
   const e=$('fsIgnition'),speed=$('fsIgnitionSpeed');
+  const rotor=e?e.querySelector('.fsRotorSymbol'):null;
+  if(rotor)rotor.src=MOBILE_FS_LITE?'symbols/mobile/BrandsymbolX.png':'symbols/BrandsymbolX.gif';
   if(!e){done&&done();return}
   e.className='fsIgnition show';
   e.setAttribute('aria-hidden','false');
