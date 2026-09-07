@@ -101,6 +101,44 @@ filter:blur(30px);animation:fsPickAurora 7s ease-in-out infinite alternate}
 
 
 
+
+/* MOBILE FREE SPINS PICK GRID FIX */
+@media(max-width:600px){
+  .fsPickBonus{padding:8px;align-items:center}
+  .fsPickPanel{width:100%;max-width:430px}
+  .fsPickTop{margin-bottom:8px}
+  .fsPickKicker{font-size:9px;letter-spacing:2px}
+  .fsPickTitle{font-size:24px;line-height:1.05;margin:3px 0 6px}
+  .fsPickInfo{gap:6px}
+  .fsPickPill{padding:5px 8px;font-size:10px}
+  .fsPickGrid{
+    grid-template-columns:repeat(6,1fr);
+    gap:4px;
+    width:100%;
+  }
+  .fsPickCell{aspect-ratio:1}
+  .fsPickCard,.fsPickFace{border-radius:8px}
+  .fsPickBack:before{font-size:24px}
+  .fsPickFront img{width:68%;height:68%}
+  .fsPickAmount{
+    right:2px;
+    bottom:2px;
+    font-size:8px;
+    padding:1px 3px;
+  }
+  .fsPickHint{margin-top:7px;font-size:9px;line-height:1.2}
+}
+@media(max-width:380px){
+  .fsPickBonus{padding:5px}
+  .fsPickPanel{max-width:360px}
+  .fsPickGrid{gap:3px}
+  .fsPickTitle{font-size:21px}
+  .fsPickPill{font-size:9px;padding:4px 6px}
+  .fsPickCard,.fsPickFace{border-radius:6px}
+  .fsPickBack:before{font-size:21px}
+  .fsPickAmount{font-size:7px}
+}
+
 </style>
 </head>
 <body>
